@@ -1,6 +1,4 @@
-### Next.js + MUI + TypeScript (Hỏi Dân IT)
-
-Template này được sử dụng cho series React/Next.JS của tác giả Hỏi Dân IT (Eric)
+### Next.js + MUI + TypeScript
 
 Các bước cần làm:
 
