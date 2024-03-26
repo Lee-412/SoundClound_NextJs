@@ -192,8 +192,7 @@ export default function AppHeader() {
             <AppBar position="fixed"
                 sx={{
                     backgroundColor: "#4c4a4a",
-                    bottom: 'auto',
-                    top: 0
+
                 }}
             >
                 <Container>
@@ -248,31 +247,6 @@ export default function AppHeader() {
                             </Link>
                             <span> Upload</span>
 
-                            {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={4} color="error">
-                                <MailIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            size="large"
-                            aria-label="show 17 new notifications"
-                            color="inherit"
-                        >
-                            <Badge badgeContent={17} color="error">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton> */}
-                            {/* <IconButton
-                                size="large"
-                                edge="end"
-                                aria-label="account of current user"
-                                aria-controls={menuId}
-                                aria-haspopup="true"
-                                onClick={handleProfileMenuOpen}
-                                color="inherit"
-                            >
-                                <AccountCircle />
-                            </IconButton> */}
                             <Avatar
                                 onClick={handleProfileMenuOpen}
                             >LD</Avatar>

@@ -5,52 +5,48 @@ import 'react-h5-audio-player/lib/styles.css';
 // import 'react-h5-audio-player/lib/styles.less';
 // import 'react-h5-audio-player/src/styles.scss';
 import CloseIcon from '@mui/icons-material/Close';
-import { useHasMounted } from '@/app/utils/customHook';
-
-const StyledFab = styled(Fab)({
-    position: 'absolute',
-    zIndex: 1,
-    top: -30,
-    left: 0,
-    right: "20px",
-    margin: '0 auto',
-});
+import { useHasMounted } from '@/utils/customHook';
+import ReactPlayer from 'react-player';
+// const StyledFab = styled(Fab)({
+//     position: 'absolute',
+//     zIndex: 1,
+//     top: -30,
+//     left: 0,
+//     right: "20px",
+//     margin: '0 auto',
+// });
 const handleClickCloseFooter = () => {
 
 }
+
 const AppFooter = () => {
     const hasMounted = useHasMounted();
 
     if (!hasMounted) return (<></>)
-
     return (
-
-
-        <AppBar position="fixed"
-            sx={{
-                background: '#f2f2f2',
-                top: 'auto', bottom: 0,
-            }}>
-            <Container
+        <div>
+            <AppBar position="fixed"
                 sx={{
-                    display: "flex",
-                    gap: 10,
+                    top: 'auto', bottom: 0,
+                    //  height: '100px',
 
-                }}>
-                <AudioPlayer
+                    background: "#f2f2f2"
+                }}
+            >
+                <Container sx={{ display: "flex", gap: 10 }}>
 
-                    autoPlay
-                    src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3"
-                    onPlay={e => console.log("onPlay")}
-                    style={{
-                        boxShadow: "unset",
-                        background: '#f2f2f2',
+                    <AudioPlayer
+                        // autoPlay
+                        src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/tracks/hoidanit.mp3`}
 
-                        visibility: "visible",
-                        transition: "transform .2s ease- out"
-                    }}
-                />
-                <>
+                        onPlay={e => console.log("onPlay")}
+                        style={{
+                            boxShadow: "unset",
+                            background: '#f2f2f2',
+                            // padding: "0px 2px"
+                        }}
+                    />
+
                     <div style={{
                         display: "flex",
                         flexDirection: "column",
@@ -74,10 +70,9 @@ const AppFooter = () => {
                     >
                         <CloseIcon />
                     </IconButton>
-                </>
-            </Container>
-        </AppBar>
-
+                </Container>
+            </AppBar >
+        </div>
     )
 }
 export default AppFooter;
