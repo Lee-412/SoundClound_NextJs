@@ -47,8 +47,8 @@ export default async function HomePage() {
   return (
     <Container
       style={{
-        paddingBottom: '10px',
-        paddingTop: '50px'
+        paddingBottom: '50px',
+        // paddingTop: '50px'
       }}>
       <MainSlider
         title={"Top Chill"}

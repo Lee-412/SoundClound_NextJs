@@ -28,8 +28,6 @@ const AppFooter = () => {
             <AppBar position="fixed"
                 sx={{
                     top: 'auto', bottom: 0,
-                    //  height: '100px',
-
                     background: "#f2f2f2"
                 }}
             >

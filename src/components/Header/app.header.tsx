@@ -189,23 +189,14 @@ export default function AppHeader() {
     }
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="fixed"
+            <AppBar position="static"
                 sx={{
                     backgroundColor: "#4c4a4a",
-
                 }}
             >
                 <Container>
                     <Toolbar>
-                        {/* <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        sx={{ mr: 2 }}
-                    >
-                        <MenuIcon />
-                    </IconButton> */}
+
                         <Typography
                             variant="h6"
                             noWrap

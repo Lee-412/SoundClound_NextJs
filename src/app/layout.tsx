@@ -9,7 +9,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <ThemeRegistry>
           <AppHeader />
-          <Container>
+          {/* <div style={{ height: "100px" }}></div> */}
+          <Container
+          // style={{ paddingTop: "50px" }}
+          >
             {children}
           </Container>
           <AppFooter />
