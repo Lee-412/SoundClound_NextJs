@@ -24,6 +24,7 @@
     "react-h5-audio-player": "3.8.6",
     "react-player": "^2.15.1",
     "react-slick": "0.29.0",
+    "sass": "1.67.0",
     "slick-carousel": "1.8.1",
     "wavesurfer.js": "^7.7.5"
   },
