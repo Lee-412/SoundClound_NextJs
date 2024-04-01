@@ -5,10 +5,12 @@ import { useSearchParams } from 'next/navigation';
 import { useWavesurfer } from "@/utils/customHook";
 import { WaveSurferOptions } from 'wavesurfer.js';
 import './wave.scss';
-import { Button, Container } from "@mui/material";
+import { Button, Container, IconButton } from "@mui/material";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import { orange } from "@mui/material/colors";
+import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
+import { render } from "react-dom";
 const WaveTrack = () => {
     const searchParams = useSearchParams()
     const fileName = searchParams.get('audio');
@@ -96,19 +98,44 @@ const WaveTrack = () => {
         const paddedSeconds = `0${secondsRemainder}`.slice(-2)
         return `${minutes}:${paddedSeconds}`
     }
+    const arrComments = [
+        {
+            id: 1,
+            avatar: "http://localhost:8000/images/chill1.png",
+            moment: 10,
+            user: "username 1",
+            content: "just a comment1"
+        },
+        {
+            id: 2,
+            avatar: "http://localhost:8000/images/chill1.png",
+            moment: 30,
+            user: "username 2",
+            content: "just a comment3"
+        },
+        {
+            id: 3,
+            avatar: "http://localhost:8000/images/chill1.png",
+            moment: 50,
+            user: "username 3",
+            content: "just a comment3"
+        },
+    ]
+    const calLeft = (moment: number, length: number) => {
+        const percent = moment / length * 100;
+        return (`${percent}% `)
+    }
 
     return (
         <Container>
             <div className="containerDiv">
                 <div className="trackDiv">
                     <div className="play-title-div">
-                        <Button
-                            className="buttonPlay"
-                            onClick={() => onPlayClick()}>
+                        <div className="buttonPlay" onClick={() => onPlayClick()}
+                        >
+                            {isPlaying ? <PauseIcon /> : <PlayArrowRoundedIcon />}
+                        </div>
 
-                            {isPlaying === true ? <PauseIcon sx={{ color: orange }} />
-                                : <PlayArrowIcon sx={{ color: orange }} ></PlayArrowIcon>}
-                        </Button>
                         <div className="titleSong">
                             <p>Lee Song</p>
                             <p>Long time no see</p>
@@ -120,22 +147,34 @@ const WaveTrack = () => {
                             <div className="time" >{time}</div>
                             <div className="duration" >{duration}</div>
                             <div ref={hoverRef} className="hover-wave"></div>
-                            <div className="overlay"
-                                style={{
-                                    position: "absolute",
-                                    height: "30px",
-                                    width: "100%",
-                                    bottom: "0",
-                                    background: "#ccc"
-                                }}
-                            ></div>
+                            <div className="overlay">
+                            </div>
+
+                            <div className="imageCommentDiv">
+                                {
+                                    arrComments.map(item => {
+                                        return (
+                                            <img
+                                                key={item.id}
+                                                className="imageComment"
+                                                style={{
+                                                    left: calLeft(item.moment, 199)
+                                                }}
+                                                src="http://localhost:8000/images/chill1.png" alt=""
+                                            />
+                                        )
+                                    })
+                                }
+                            </div>
 
                         </div>
 
                     </div>
                 </div>
                 <div className="imageDiv">
-                    image
+                    <div className="image">
+                        <img src="" alt="" />
+                    </div>
                 </div>
             </div>
         </Container >

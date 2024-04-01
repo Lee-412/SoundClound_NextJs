@@ -89,32 +89,80 @@
 /*Container Div Track*/
 .containerDiv {
     display: flex;
-    background-color: grey;
+    background: linear-gradient(135deg, rgb(106, 112, 67) 0%, rgb(11, 15, 20) 100%);
+    margin-top: 20px;
+    gap: 15;
+    padding: 20;
+    height: 370px;
 }
 
 /*Track Div*/
 .trackDiv {
+    height: "calc(100% - 10px)";
     width: 70%;
+    display: "flex";
+    flex-Direction: "column";
+    justify-Content: "space-between";
 }
 
 /*button and title div*/
 .play-title-div {
     display: flex;
     flex-direction: row;
+    align-items: center;
+
 }
 
 .buttonPlay {
-    background-color: tomato;
+    display: flex;
+    color: white;
+    background: #f50;
+    border-Radius: 50%;
+    width: 50px;
+    height: 50px;
+    justify-Content: center;
+    align-Content: center;
+    text-align: center;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 20px;
+    margin-left: 20px;
 }
 
+.titleSong p {
+    background-color: rgb(54, 36, 36);
+    color: whitesmoke;
+    width: fit-content;
+    height: fit-content;
+    font-size: large;
+}
 
 /*wave track div*/
 .wavetrack-div {
-    margin-bottom: 30px;
-    margin-left: 25px;
-    margin-right: 25px;
+    padding: 25px;
+    height: 100px;
 }
 
+.overlay {
+    position: absolute;
+    height: 30px;
+    width: 100%;
+    bottom: 0;
+    backdrop-filter: brightness(0.5);
+
+}
+
+.imageCommentDiv {
+    position: relative;
+}
+
+.imageComment {
+    position: absolute;
+    z-index: 20;
+    top: 71px;
+    height: 20px;
+    width: 20px
+}
 
 /*iamge div*/
 .imageDiv {
@@ -122,5 +170,12 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    width: 25%;
+    padding-left: 20px;
+}
 
+.image {
+    background-color: grey;
+    height: 250px;
+    width: 250px;
 }
