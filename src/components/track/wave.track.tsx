@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { useWavesurfer } from "@/utils/customHook";
 import { WaveSurferOptions } from 'wavesurfer.js';
 import './wave.scss';
-import { Button, Container, IconButton } from "@mui/material";
+import { Button, Container } from "@mui/material";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import { orange } from "@mui/material/colors";
@@ -102,16 +102,12 @@ const WaveTrack = () => {
             <div className="containerDiv">
                 <div className="trackDiv">
                     <div className="play-title-div">
-                        <Button className="buttonPlay" onClick={() => onPlayClick()}>
-                            {isPlaying === true ? (
-                                <IconButton sx={{ color: 'orange' }}>
-                                    <PauseIcon />
-                                </IconButton>
-                            ) : (
-                                <IconButton sx={{ color: 'orange' }}>
-                                    <PlayArrowIcon />
-                                </IconButton>
-                            )}
+                        <Button
+                            className="buttonPlay"
+                            onClick={() => onPlayClick()}>
+
+                            {isPlaying === true ? <PauseIcon sx={{ color: orange }} />
+                                : <PlayArrowIcon sx={{ color: orange }} ></PlayArrowIcon>}
                         </Button>
                         <div className="titleSong">
                             <p>Lee Song</p>
