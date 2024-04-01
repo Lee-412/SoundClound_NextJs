@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { useWavesurfer } from "@/utils/customHook";
 import { WaveSurferOptions } from 'wavesurfer.js';
 import './wave.scss';
-import { Button, Container, IconButton } from "@mui/material";
+import { Button, Container, IconButton, Tooltip } from "@mui/material";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import { orange } from "@mui/material/colors";
@@ -154,14 +154,21 @@ const WaveTrack = () => {
                                 {
                                     arrComments.map(item => {
                                         return (
-                                            <img
-                                                key={item.id}
-                                                className="imageComment"
-                                                style={{
-                                                    left: calLeft(item.moment, 199)
-                                                }}
-                                                src="http://localhost:8000/images/chill1.png" alt=""
-                                            />
+                                            <Tooltip title={item.content} arrow>
+                                                <img
+                                                    onPointerMove={(e) => {
+                                                        const hover = hoverRef.current!;
+                                                        hover.style.width = calLeft(item.moment + 3, 199)
+                                                    }}
+                                                    key={item.id}
+                                                    className="imageComment"
+                                                    style={{
+                                                        left: calLeft(item.moment, 199)
+                                                    }}
+                                                    src="http://localhost:8000/images/chill1.png" alt=""
+                                                />
+                                            </Tooltip>
+
                                         )
                                     })
                                 }
