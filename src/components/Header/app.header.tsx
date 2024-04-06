@@ -8,21 +8,15 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Container from '@mui/material/Container';
-import { Button, colors } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
-
+import { useSession, signIn, signOut } from "next-auth/react"
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -65,8 +59,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function AppHeader() {
-    const router = useRouter();
 
+    const { data: session } = useSession()
+
+    const router = useRouter();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
@@ -230,17 +226,36 @@ export default function AppHeader() {
                                 textDecoration: 'unset'
                             }
                         }}>
-                            <Link href={"/playlist"}>
-                                Playlists
+                            {
+                                session ?
+                                    <>
+                                        <Link href={"/playlist"}>
+                                            Playlists
+                                        </Link>
+                                        <Link href={"/like"}>
+                                            Likes
+                                        </Link>
+                                        <span> Upload</span>
+                                        <Avatar
+                                            onClick={handleProfileMenuOpen}
+                                        >LD</Avatar>
+                                    </> :
+                                    <>
+                                        <Link href={"/api/auth/signin"}>
+                                            Login
+                                        </Link>
+                                    </>
+                            }
+                            {/*  <Link href={"/playlist"}>
+                            //     Playlists
+                             </Link>
+                             <Link href={"/like"}>
+                            //     Likes
                             </Link>
-                            <Link href={"/like"}>
-                                Likes
-                            </Link>
-                            <span> Upload</span>
-
-                            <Avatar
-                                onClick={handleProfileMenuOpen}
-                            >LD</Avatar>
+                             <span> Upload</span>
+                             <Avatar
+                            //     onClick={handleProfileMenuOpen}
+                            >LD</Avatar> */}
                         </Box>
                         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                             <IconButton
@@ -259,6 +274,6 @@ export default function AppHeader() {
             </AppBar>
             {renderMobileMenu}
             {renderMenu}
-        </Box>
+        </Box >
     );
 }
