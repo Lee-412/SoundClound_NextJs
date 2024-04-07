@@ -60,7 +60,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function AppHeader() {
 
-    const { data: session } = useSession()
+    const { data: session } = useSession();
+    console.log("check session:", session);
 
     const router = useRouter();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -116,8 +117,14 @@ export default function AppHeader() {
                     Profiles
                 </Link>
             </MenuItem>
-            <MenuItem onClick={handleMenuClose}>My Account</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Sign Out</MenuItem>
+            {/* <MenuItem onClick={handleMenuClose}>My Account</MenuItem> */}
+            <MenuItem onClick={
+                () => {
+                    handleMenuClose();
+                    signOut();
+                }
+
+            }>Sign Out</MenuItem>
 
 
         </Menu >
@@ -241,21 +248,13 @@ export default function AppHeader() {
                                         >LD</Avatar>
                                     </> :
                                     <>
-                                        <Link href={"/api/auth/signin"}>
+                                        <Link href={"#"}
+                                            onClick={() => signIn()}>
                                             Login
                                         </Link>
                                     </>
                             }
-                            {/*  <Link href={"/playlist"}>
-                            //     Playlists
-                             </Link>
-                             <Link href={"/like"}>
-                            //     Likes
-                            </Link>
-                             <span> Upload</span>
-                             <Avatar
-                            //     onClick={handleProfileMenuOpen}
-                            >LD</Avatar> */}
+
                         </Box>
                         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                             <IconButton
