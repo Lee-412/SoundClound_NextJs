@@ -248,8 +248,8 @@ export default function AppHeader() {
                                         >LD</Avatar>
                                     </> :
                                     <>
-                                        <Link href={"#"}
-                                            onClick={() => signIn()}>
+                                        <Link href={"/auth/signin"}
+                                        >
                                             Login
                                         </Link>
                                     </>

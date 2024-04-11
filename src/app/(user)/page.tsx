@@ -1,6 +1,6 @@
 import MainSlider from "@/components/maincontent/main.slider";
 import { Container } from "@mui/material";
-import { sendRequest } from "../utils/api";
+import { sendRequest } from "../../utils/api";
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
@@ -37,6 +37,7 @@ export default async function HomePage() {
 
 
   return (
+
     <Container
       style={{
         paddingBottom: '50px',
