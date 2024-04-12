@@ -1,5 +1,6 @@
 'use client'
-
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -16,6 +17,8 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useState } from 'react';
 import { signIn } from "next-auth/react";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { redirect, useRouter } from 'next/navigation';
 export default function SingInForm() {
 
     const [password, setPassword] = React.useState("");
@@ -27,8 +30,11 @@ export default function SingInForm() {
     const [errorUsername, setErrorUsername] = useState<string>("");
     const [errorPassword, setErrorPassword] = useState<string>("");
 
+    const [openMessage, setOpenMessage] = useState<boolean>(false);
+    const [resMessage, setResMessage] = useState<string>("");
 
-    const handleSubmit = () => {
+    const router = useRouter()
+    const handleSubmit = async () => {
         setIsErrorUsername(false);
         setIsErrorPassword(false);
         setErrorUsername("");
@@ -47,7 +53,22 @@ export default function SingInForm() {
             }
             return;
         }
-        console.log(">>> check username: ", username, ' pass: ', password)
+        const res = await signIn("credentials",
+            {
+                username: username,
+                password: password,
+                redirect: false
+            }
+        )
+        if (!res?.error) {
+            router.push('/')
+        }
+        else {
+            console.log("check error", res)
+            setResMessage(res.error);
+            setOpenMessage(true);
+        }
+
     }
 
 
@@ -80,11 +101,15 @@ export default function SingInForm() {
 
                 }}>
                 <Container
-                    // style={{ margin: "20px" }}
-
                     component="main" maxWidth="xs"
+                    sx={{
+                        display: "inline-block",
+                    }}
                 >
-
+                    <Link href="/" > <ArrowBackIcon
+                        sx={{
+                            marginTop: "20px"
+                        }} /></Link>
                     <Box
                         sx={{
 
@@ -95,8 +120,10 @@ export default function SingInForm() {
                     >
                         <Avatar sx={{
                             // m: 1,
+                            display: "flex",
                             marginTop: "10px",
-                            bgcolor: 'secondary.main'
+                            bgcolor: 'secondary.main',
+                            justifyContent: "center"
                         }}>
                             <LockOutlinedIcon />
                         </Avatar>
@@ -137,7 +164,11 @@ export default function SingInForm() {
                             type={showPassword ? "text" : "password"}
                             error={isErrorPassword}
                             helperText={errorPassword}
-
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    handleSubmit()
+                                }
+                            }}
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">
                                     <IconButton onClick={() => setShowPassword(!showPassword)}>
@@ -155,6 +186,7 @@ export default function SingInForm() {
                             variant="contained"
                             color="primary"
                             onClick={handleSubmit}
+
                         >
                             Sign In
                         </Button>
@@ -216,6 +248,23 @@ export default function SingInForm() {
 
                 </Container>
             </Grid>
+
+            <Snackbar
+                open={openMessage}
+
+                // onClose={handleClose}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+                <Alert
+                    onClose={() => { setOpenMessage(false) }}
+                    severity="error"
+                    variant="standard"
+                    sx={{ width: '100%' }}
+                >
+                    {resMessage}
+                </Alert>
+            </Snackbar>
         </Grid >
+
     );
 }
