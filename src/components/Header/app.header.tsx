@@ -1,6 +1,6 @@
 'use client'
 
-import * as React from 'react';
+
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -15,8 +15,9 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Link from 'next/link'
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { useSession, signIn, signOut } from "next-auth/react"
+import { useState } from 'react';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -64,10 +65,11 @@ export default function AppHeader() {
     console.log("check session:", session);
 
     const router = useRouter();
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-        React.useState<null | HTMLElement>(null);
+        useState<null | HTMLElement>(null);
 
+    const [checkSignout, setCheckSignout] = useState(false)
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -121,11 +123,11 @@ export default function AppHeader() {
             <MenuItem onClick={
                 () => {
                     handleMenuClose();
+                    setCheckSignout(true);
                     signOut();
                 }
 
             }>Sign Out</MenuItem>
-
 
         </Menu >
     );
@@ -168,7 +170,7 @@ export default function AppHeader() {
                     </Link>
                 </MenuItem>
                 <MenuItem>
-                    <Link href={"/playlist"} style={{
+                    <Link href={"/tracks/upload"} style={{
                         color: 'unset',
                         textDecoration: 'unset',
                     }}>
@@ -190,7 +192,9 @@ export default function AppHeader() {
     const handleRedirectHome = () => {
         router.push('/');
     }
+
     return (
+
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static"
                 sx={{
@@ -209,7 +213,6 @@ export default function AppHeader() {
                                 cursor: 'pointer'
                             }}
                             onClick={() => handleRedirectHome()}
-
                         >
                             SoundCloud
                         </Typography>
@@ -242,7 +245,9 @@ export default function AppHeader() {
                                         <Link href={"/like"}>
                                             Likes
                                         </Link>
-                                        <span> Upload</span>
+                                        <Link href={"/tracks/upload"}>
+                                            Uploads
+                                        </Link>
                                         <Avatar
                                             onClick={handleProfileMenuOpen}
                                         >LD</Avatar>
@@ -275,4 +280,5 @@ export default function AppHeader() {
             {renderMenu}
         </Box >
     );
+
 }
