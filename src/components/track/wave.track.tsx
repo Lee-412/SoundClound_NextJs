@@ -5,12 +5,9 @@ import { useSearchParams } from 'next/navigation';
 import { useWavesurfer } from "@/utils/customHook";
 import { WaveSurferOptions } from 'wavesurfer.js';
 import './wave.scss';
-import { Button, Container, IconButton, Tooltip } from "@mui/material";
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import { Container, Tooltip } from "@mui/material";
 import PauseIcon from '@mui/icons-material/Pause';
-import { orange } from "@mui/material/colors";
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
-import { render } from "react-dom";
 const WaveTrack = () => {
     const searchParams = useSearchParams()
     const fileName = searchParams.get('audio');
