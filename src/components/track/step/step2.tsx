@@ -1,24 +1,88 @@
 'use client'
 import * as React from 'react';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import LinearWithValueLabel from '@/components/upload/progress.upload';
-import { Button, Container, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
-import ButtonUploadFile from '@/components/upload/button.upload';
+import { Button, Container, Grid, MenuItem, TextField, styled } from '@mui/material';
+
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 
-const Step2 = () => {
+export interface DataUploadStep2 {
+    trackUpload: {
+        fileName: string;
+        percent: number,
+        uploadedTrackName: string;
+    }
+}
 
-    // const [category, setCategory] = React.useState('');
-    const [title, setTitle] = React.useState('');
-    const [description, setDescription] = React.useState('');
+interface NewTrackUpload {
+    title: string;
+    description: string;
+    trackUlrl: string;
+    imgUrl: string;
+    category: string
+}
 
-    // const handleChange = (event: SelectChangeEvent) => {
-    //     setCategory(event.target.value);
-    // };
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+});
 
+function InputFileUpload() {
+    return (
+        <Button
+            component="label"
+            role={undefined}
+            tabIndex={-1}
+            variant="outlined"
+
+            onChange={(e) => {
+                const event = e.target as HTMLInputElement;
+                if (event.files) {
+                    console.log(event.files[0]);
+                }
+
+            }}
+            startIcon={<CloudUploadIcon />}
+        >
+            Upload a file
+            <VisuallyHiddenInput type="file" />
+        </Button>
+    );
+}
+
+
+const Step2 = (props: DataUploadStep2) => {
+
+    const { trackUpload } = props;
+
+    const [infor, setInfor] = React.useState<NewTrackUpload>({
+        title: "",
+        description: "",
+        trackUlrl: "",
+        imgUrl: "",
+        category: ""
+    })
+
+    React.useEffect(() => {
+        if (trackUpload && trackUpload.uploadedTrackName) {
+            setInfor({
+                ...infor,
+                trackUlrl: trackUpload.uploadedTrackName
+
+            })
+
+        }
+    }, [props.trackUpload])
     const handleSave = () => {
-        console.log("check save", title, " ", description, " ", category)
+        console.log(infor);
     }
 
 
@@ -37,99 +101,18 @@ const Step2 = () => {
         }
     ];
 
-
     return (
-        // <Container>
-        //     <Box sx={{
 
-        //         marginTop: "10px",
-
-        //     }} >
-        //         <Typography> Your file Upload</Typography>
-        //         <LinearWithValueLabel />
-        //     </Box>
-        //     <Box sx={{
-        //         display: "flex",
-        //         marginTop: "30px",
-        //         marginBottom: "15px",
-        //         alignItems: 'flex-start'
-        //     }} >
-        //         <Box sx={{
-        //             display: "flex",
-        //             flexDirection: "column",
-        //             alignItems: "center",
-        //             width: "20%",
-        //         }}>
-        //             <img
-        //                 className="imageComment"
-        //                 style={{
-        //                     width: "200px",
-        //                     height: "200px",
-        //                     backgroundColor: "grey"
-        //                 }}
-        //                 src='' alt=''
-        //             />
-
-        //             <br />
-        //             <ButtonUploadFile />
-        //         </Box>
-        //         <Box
-        //             component="form"
-        //             sx={{
-        //                 display: "flex",
-        //                 flexDirection: "column",
-        //                 width: "80%",
-        //                 alignItems: "flex-start",
-        //                 marginLeft: "30px",
-
-        //             }}
-        //             noValidate
-        //             autoComplete="off"
-
-        //         >
-        //             <TextField sx={{ m: 1, minWidth: "100%" }}
-        //                 onChange={(event) => { setTitle(event.target.value); }}
-        //                 id="title"
-        //                 label="Title"
-        //                 variant="standard" />
-        //             <TextField sx={{ m: 1, minWidth: "100%" }}
-        //                 onChange={(event) => { setDescription(event.target.value); }}
-        //                 id="description"
-        //                 label="Description"
-        //                 variant="standard" />
-
-        //             <FormControl variant="standard" sx={{ m: 1, minWidth: "100%" }} size="small">
-        //                 <InputLabel id="demo-select-small-label">Category</InputLabel>
-        //                 <Select
-        //                     labelId="demo-select-small-label"
-        //                     id="demo-select-small"
-        //                     value={category}
-        //                     label="Category"
-        //                     onChange={handleChange}
-        //                 >
-        //                     <MenuItem value={"CHILL"}>CHILL</MenuItem>
-        //                     <MenuItem value={"WORKOUT"}>WORKOUT</MenuItem>
-        //                     <MenuItem value={"PARTY"}>PARTY</MenuItem>
-        //                 </Select>
-        //             </FormControl>
-        //             <Button
-        //                 sx={{ m: 1, marginTop: "15px" }}
-        //                 onClick={() => { handleSave() }}
-        //                 variant="outlined"
-        //             >Save
-        //             </Button>
-        //         </Box>
-        //     </Box>
-        // </Container>
-        <Container>
+        <Container sx={{
+            height: "80vh"
+        }} >
             <Box sx={{
-                marginTop: "8px",
-                marginBottom: "3px"
+                marginTop: "1vh"
             }}>
                 <div>
-                    Your uploading track:
+                    {props.trackUpload.fileName}
                 </div>
-                <LinearWithValueLabel />
+                <LinearWithValueLabel trackUpload={props.trackUpload} />
             </Box>
 
             <Grid container spacing={2} mt={1}>
@@ -150,30 +133,51 @@ const Step2 = () => {
                                     width: "200px",
                                     height: "200px",
                                 }}
-                                src='' alt=''
+                                src="" alt=''
                             />
                         </div>
 
                     </div>
-                    <div >
-                        <ButtonUploadFile />
+                    <div>
+                        <InputFileUpload />
                     </div>
-
                 </Grid>
                 <Grid item xs={6} md={8}>
-                    <TextField id="standard-basic" label="Title" variant="standard" fullWidth margin="dense" />
-                    <TextField id="standard-basic" label="Description" variant="standard" fullWidth margin="dense" />
+                    <TextField
+                        label="Title" variant="standard"
+                        fullWidth
+                        margin="dense"
+                        defaultValue={infor.title}
+                        onChange={(e) => setInfor({
+                            ...infor,
+                            title: e.target.value
+                        })} />
+
+                    <TextField
+                        label="Description"
+                        variant="standard"
+                        fullWidth
+                        margin="dense"
+                        defaultValue={infor.description}
+                        onChange={(e) => setInfor({
+                            ...infor,
+                            description: e.target.value
+                        })} />
+
                     <TextField
                         sx={{
                             mt: 3
                         }}
-                        id="outlined-select-currency"
+
                         select
                         label="Category"
                         fullWidth
                         variant="standard"
-                    //   defaultValue="EUR"
-                    >
+                        defaultValue={infor.category}
+                        onChange={(e) => setInfor({
+                            ...infor,
+                            category: e.target.value
+                        })} >
                         {category.map((option) => (
                             <MenuItem key={option.value} value={option.value}>
                                 {option.label}
@@ -185,11 +189,13 @@ const Step2 = () => {
                         sx={{
                             mt: 5,
                             mb: 2
-                        }}>Save</Button>
+                        }}
+                        onClick={handleSave}>
+                        Save</Button>
                 </Grid>
             </Grid>
 
-        </Container>
+        </Container >
 
     );
 }

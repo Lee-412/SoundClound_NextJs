@@ -2,6 +2,7 @@ import * as React from 'react';
 import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { DataUploadStep2 } from '../track/step/step2';
 
 function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
     return (
@@ -18,21 +19,12 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
     );
 }
 
-export default function LinearWithValueLabel() {
-    const [progress, setProgress] = React.useState(10);
+export default function LinearWithValueLabel(props: DataUploadStep2) {
 
-    React.useEffect(() => {
-        const timer = setInterval(() => {
-            setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
-        }, 800);
-        return () => {
-            clearInterval(timer);
-        };
-    }, []);
 
     return (
         <Box sx={{ width: '100%' }}>
-            <LinearProgressWithLabel value={progress} />
+            <LinearProgressWithLabel value={props.trackUpload.percent} />
         </Box>
     );
 }

@@ -53,7 +53,6 @@ export const sendRequestFile = async <T>(props: IRequest) => {
 
     const options: any = {
         method: method,
-        // by default setting the content-type to be json type
         headers: new Headers({ ...headers }),
         body: body ? body : null,
         ...nextOption

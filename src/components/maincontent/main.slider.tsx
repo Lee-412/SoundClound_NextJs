@@ -15,6 +15,9 @@ interface IProps {
     data: ITrackTop[]
 }
 const MainSlider = (props: IProps) => {
+    console.log(props);
+    let slideData = [...props.data, ...props.data]
+    console.log(slideData);
 
     const NextArrow = (props: any) => {
         return (
@@ -85,21 +88,21 @@ const MainSlider = (props: IProps) => {
         >
             <h2> {props.title} </h2>
 
-            <Slider {...settings}>{
-                props.data.map(track => {
-                    return (
-                        <div className="track" key={track._id}>
-                            <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${track.imgUrl}`}>
-                            </img>
-                            <Link href={`/tracks/${track._id}?audio=${track.trackUrl}`}>
-                                {/* <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${track.imgUrl}`}>
-                                </img> */}
-                                <h4>{track.title}</h4>
-                            </Link>
-                            <h5>{track.description}</h5>
-                        </div>
-                    )
-                })}
+            <Slider {...settings}>
+                {
+                    slideData.map(track => {
+                        return (
+                            <div className="track" key={track._id}>
+                                <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${track.imgUrl}`}>
+                                </img>
+                                <Link href={`/tracks/${track._id}?audio=${track.trackUrl}`}>
+
+                                    <h4>{track.title}</h4>
+                                </Link>
+                                <h5>{track.description}</h5>
+                            </div>
+                        )
+                    })}
 
             </Slider>
             <Divider />
@@ -107,6 +110,4 @@ const MainSlider = (props: IProps) => {
 
     );
 }
-
-
 export default MainSlider;

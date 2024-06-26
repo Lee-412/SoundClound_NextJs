@@ -18,6 +18,7 @@ export default async function HomePage() {
       limit: "10"
     }
   });
+
   const workouts = await sendRequest<IBackendRes<ITrackTop[]>>({
     url: "http://localhost:8000/api/v1/tracks/top",
     method: "POST",
@@ -45,7 +46,8 @@ export default async function HomePage() {
       }}>
       <MainSlider
         title={"Top Chill"}
-        data={chills?.data ? chills.data : []} />
+        data={chills?.data ?? []} />
+
       <MainSlider
         title={"Top Workout"}
         data={workouts?.data ?? []} />
