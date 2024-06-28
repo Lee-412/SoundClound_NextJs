@@ -1,14 +1,14 @@
-
 'use client'
-import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { useDropzone } from 'react-dropzone';
-import { StepButton } from '@mui/material';
+import * as React from 'react';
 import Step1 from './step/step1';
 import Step2 from './step/step2';
+import { Button, Dialog, DialogActions, DialogTitle, Slide, Tooltip } from '@mui/material';
+import { TransitionProps } from '@mui/material/transitions';
+import { Route } from '@mui/icons-material';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -28,29 +28,25 @@ function CustomTabPanel(props: TabPanelProps) {
             {...other}
         >
             {value === index && (
-                <Box sx={{
-
-                }}>
+                <Box sx={{ p: 3 }}>
                     {children}
                 </Box>
             )}
         </div>
     );
 }
-
-function a11yProps(index: number) {
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
-    };
-}
-
-
+const Transition = React.forwardRef(function Transition(
+    props: TransitionProps & {
+        children: React.ReactElement<any, any>;
+    },
+    ref: React.Ref<unknown>,
+) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const UploadTabs = () => {
-
-
     const [value, setValue] = React.useState(0);
+
     const [trackUpload, setTrackUpload] = React.useState({
         fileName: "",
         percent: 0,
@@ -61,33 +57,37 @@ const UploadTabs = () => {
         setValue(newValue);
     };
 
+
+
     return (
-        <Box sx={{
-            width: '100%',
-            border: "1px solid #ccc",
-            mt: 5,
-        }}>
+        <Box sx={{ width: '100%', border: "1px solid #ccc", mt: 2 }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="Upload Track" {...a11yProps(0)} />
-                    <Tab label="Information" {...a11yProps(1)} />
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    aria-label="basic tabs example"
+                >
+                    <Tab label="Tracks" disabled={value !== 0} />
+
+                    <Tab label="Basic information" disabled={value !== 1} />
 
                 </Tabs>
             </Box>
-            <CustomTabPanel value={value} index={0} >
-
+            <CustomTabPanel value={value} index={0}>
                 <Step1
                     setValue={setValue}
-                    trackUpload={trackUpload}
                     setTrackUpload={setTrackUpload}
+                    trackUpload={trackUpload}
                 />
-
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
                 <Step2
+                    setValue={setValue}
                     trackUpload={trackUpload}
                 />
             </CustomTabPanel>
+
+
 
         </Box>
     );

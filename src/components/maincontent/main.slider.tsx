@@ -15,9 +15,7 @@ interface IProps {
     data: ITrackTop[]
 }
 const MainSlider = (props: IProps) => {
-    console.log(props);
     let slideData = [...props.data, ...props.data]
-    console.log(slideData);
 
     const NextArrow = (props: any) => {
         return (
